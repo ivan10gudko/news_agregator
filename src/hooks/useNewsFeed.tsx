@@ -1,69 +1,55 @@
-import { useState, useMemo } from "react";
+import useNewsFilters from "./useNewsFilters";
+import { useCmsConfig } from "./useCmsConfig";
+import { useCallback, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { fetchCmsConfig } from "../api/cms.api";
-import { fetchNews } from "../api/news.api";
+import { fetchNews } from "@/api/news.api";
+import type { NewsApiResponse } from "@/types/news.types";
+import { formatSourcesForApi } from "@/utils/cms.utils";
+import { transformAndSortArticles } from "@/utils/news.utils";
 
 export const useNewsFeed = () => {
-    const [searchQuery, setSearchQuery] = useState("");
-    const [selectedSource, setSelectedSource] = useState("all");
-    const [sortOrder, setSortOrder] = useState<"desc" | "asc">("desc");
-
-    const { data: cmsConfig, isLoading: isCmsLoading } = useQuery({
-        queryKey: ["cmsConfig"],
-        queryFn: fetchCmsConfig,
-    });
+    const filters = useNewsFilters();
+    const { data: cmsConfig, isLoading: isCmsLoading } = useCmsConfig();
 
     const sourcesForApi = useMemo(() => {
         if (!cmsConfig) return "";
-        if (selectedSource !== "all") return selectedSource;
 
-        return cmsConfig.allowedSources.map((s) => s.id).join(",");
-    }, [cmsConfig, selectedSource]);
+        return formatSourcesForApi(
+            filters.selectedSource,
+            cmsConfig.allowedSources
+        );
+    }, [cmsConfig, filters.selectedSource]);
+
+    const selectFn = useCallback(
+        (rawNewsData: NewsApiResponse) =>
+            transformAndSortArticles(
+                rawNewsData,
+                cmsConfig?.topics,
+                filters.sortOrder
+            ),
+        [cmsConfig?.topics, filters.sortOrder]
+    );
 
     const {
-        data: newsData,
+        data,
         isLoading: isNewsLoading,
         error,
     } = useQuery({
-        queryKey: ["news", searchQuery, sourcesForApi],
+        queryKey: ["news", filters.searchQuery, sourcesForApi],
         queryFn: () =>
             fetchNews({
-                q: searchQuery || "general",
+                q: filters.searchQuery || "general",
                 sources: sourcesForApi,
             }),
         enabled: !!sourcesForApi,
+        select: selectFn,
     });
 
-    const processedArticles = useMemo(() => {
-        if (!newsData?.articles) return [];
-
-        const articles = [...newsData.articles];
-
-        //  API doesn`t support sort order,
-        //  and has limits for data in Free Plan
-        //  so , just sort in client
-        if (sortOrder === "asc") {
-            articles.reverse();
-        }
-
-        // topic logic
-
-        return articles;
-    }, [newsData, sortOrder]);
-
     return {
-        articles: processedArticles,
+        articles: data ?? [],
         cmsConfig,
-
         isLoading: isCmsLoading || isNewsLoading,
         error,
-
-        searchQuery,
-        selectedSource,
-        sortOrder,
-
-        setSearchQuery,
-        setSelectedSource,
-        setSortOrder,
+        ...filters
     };
 };

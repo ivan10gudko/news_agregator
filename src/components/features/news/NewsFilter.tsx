@@ -1,0 +1,80 @@
+import { Input } from "@/components/ui/input";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+import { Search } from "lucide-react";
+
+interface NewsFiltersProps {
+    searchQuery: string;
+    setSearchQuery: (val: string) => void;
+    selectedSource: string;
+    setSelectedSource: (val: string) => void;
+    sortOrder: "desc" | "asc";
+    setSortOrder: (val: "desc" | "asc") => void;
+    allowedSources?: { id: string; name: string }[];
+}
+
+const NewsFilters = ({
+    searchQuery,
+    setSearchQuery,
+    selectedSource,
+    setSelectedSource,
+    sortOrder,
+    setSortOrder,
+    allowedSources = [],
+}: NewsFiltersProps) => {
+    return (
+        <div className="mb-8 grid grid-cols-2 gap-4 md:flex md:flex-row md:items-center">
+            <div className="relative col-span-2 md:flex-1">
+                <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
+                <Input
+                    type="text"
+                    placeholder="Search news..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full pl-10"
+                />
+            </div>
+
+            <div className="col-span-1 md:w-52">
+                <Select
+                    value={selectedSource}
+                    onValueChange={setSelectedSource}
+                >
+                    <SelectTrigger className="w-full">
+                        <SelectValue placeholder="All Sources" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="all">All Sources</SelectItem>
+                        {allowedSources.map((source) => (
+                            <SelectItem key={source.id} value={source.id}>
+                                {source.name}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
+            </div>
+
+            <div className="col-span-1 md:w-48">
+                <Select
+                    value={sortOrder}
+                    onValueChange={(val) => setSortOrder(val as "desc" | "asc")}
+                >
+                    <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Sort by Date" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="desc">Newest first</SelectItem>
+                        <SelectItem value="asc">Oldest first</SelectItem>
+                    </SelectContent>
+                </Select>
+            </div>
+        </div>
+    );
+};
+
+export default NewsFilters;

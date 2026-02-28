@@ -21,7 +21,6 @@ export const determineArticleTopics = (
         return acc;
     }, []);
 
-    console.log(`Заголовок: ${title} | Знайдено топіків: ${res.length}`);
     return res;
 };
 
@@ -38,4 +37,8 @@ export const transformAndSortArticles = (
     }));
 
     return sortOrder === "asc" ? transformed.reverse() : transformed;
+};
+
+export const createSlug = (title: string) => {
+    return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
 };

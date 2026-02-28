@@ -40,6 +40,7 @@ export const useNewsFeed = () => {
             fetchNews({
                 q: filters.searchQuery || "general",
                 sources: sourcesForApi,
+                sortBy: "publishedAt"
             }),
         enabled: !!sourcesForApi,
         select: selectFn,

@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { ImageOff } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface ArticleImageProps {
     src?: string | null;
     alt: string;
+    className?: string;
 }
 
-const ArticleImage = ({ src, alt }: ArticleImageProps) => {
+const ArticleImage = ({ src, alt, className="aspect-3/2" }: ArticleImageProps) => {
     const [hasError, setHasError] = useState(false);
 
     const placeholder = (
@@ -16,7 +18,7 @@ const ArticleImage = ({ src, alt }: ArticleImageProps) => {
     );
 
     return (
-        <div className="bg-muted relative aspect-3/2 w-full overflow-hidden">
+        <div className={cn("bg-muted relative w-full overflow-hidden", className)}>
             {src && !hasError ? (
                 <img
                     src={src}

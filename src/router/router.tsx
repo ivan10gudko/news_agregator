@@ -1,7 +1,7 @@
 import { createBrowserRouter, Navigate } from "react-router";
 import MainLayout from "../layouts/MainLayout";
 import NewsFeed from "../pages/NewsFeed";
-import NewsDetails from "../pages/NewsDetails";
+import ArticlePage from "../pages/ArticlePage";
 
 const router = createBrowserRouter([
     {
@@ -10,7 +10,7 @@ const router = createBrowserRouter([
         children: [
             { index: true, element: <Navigate to="/news" replace /> },
             { path: "news", element: <NewsFeed /> },
-            { path: "news/:newsId", element: <NewsDetails /> },
+            { path: "article/:slug", element: <ArticlePage /> },
         ],
     },
 ]);

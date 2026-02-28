@@ -9,7 +9,7 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import ArticleImage from "./ArticleImage";
+import ArticleImage from "../../shared/ArticleImage";
 import { createSlug } from "@/utils/news.utils";
 
 interface ArticleCardProps {

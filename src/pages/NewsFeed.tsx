@@ -1,5 +1,6 @@
 import NewsFilters from "@/components/features/news/NewsFilter";
 import NewsGrid from "@/components/features/news/NewsGrid";
+import NewsGridSkeleton from "@/components/features/news/NewsGridSkeleton";
 import ErrorMessage from "@/components/shared/ErrorMessage";
 import { useNewsFeed } from "@/hooks/useNewsFeed";
 
@@ -36,13 +37,7 @@ const HomePage = () => {
                 allowedSources={cmsConfig?.allowedSources}
             />
 
-            {isLoading && (
-                <div className="flex h-64 items-center justify-center">
-                    <p className="text-lg animate-pulse text-muted-foreground">
-                        Loading latest news...
-                    </p>
-                </div>
-            )}
+            {isLoading && <NewsGridSkeleton />}
 
             {error && !isLoading && (
                 <ErrorMessage

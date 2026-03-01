@@ -1,4 +1,3 @@
-import { Input } from "@/components/ui/input";
 import {
     Select,
     SelectContent,
@@ -6,9 +5,9 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { Search } from "lucide-react";
+import SearchFilter from "./SearchFilter";
 
-interface FiltersProps{
+interface FiltersProps {
     searchQuery: string;
     setSearchQuery: (val: string) => void;
     selectedSource: string;
@@ -18,28 +17,26 @@ interface FiltersProps{
 }
 
 interface NewsFiltersProps {
-    filters: FiltersProps
+    filters: FiltersProps;
     allowedSources?: { id: string; name: string }[];
 }
 
-const NewsFilters = ({
-    filters,
-    allowedSources = [],
-}: NewsFiltersProps) => {
-    const {searchQuery , setSearchQuery, selectedSource,setSelectedSource ,sortOrder ,setSortOrder} = filters;
-    
+const NewsFilters = ({ filters, allowedSources = [] }: NewsFiltersProps) => {
+    const {
+        searchQuery,
+        setSearchQuery,
+        selectedSource,
+        setSelectedSource,
+        sortOrder,
+        setSortOrder,
+    } = filters;
+
     return (
         <div className="mb-8 grid grid-cols-2 gap-4 md:flex md:flex-row md:items-center">
-            <div className="relative col-span-2 md:flex-1">
-                <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
-                <Input
-                    type="text"
-                    placeholder="Search news..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-10"
-                />
-            </div>
+            <SearchFilter
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+            />
 
             <div className="col-span-1 md:w-52">
                 <Select

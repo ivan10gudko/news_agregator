@@ -8,25 +8,26 @@ import {
 } from "@/components/ui/select";
 import { Search } from "lucide-react";
 
-interface NewsFiltersProps {
+interface FiltersProps{
     searchQuery: string;
     setSearchQuery: (val: string) => void;
     selectedSource: string;
     setSelectedSource: (val: string) => void;
     sortOrder: "desc" | "asc";
     setSortOrder: (val: "desc" | "asc") => void;
+}
+
+interface NewsFiltersProps {
+    filters: FiltersProps
     allowedSources?: { id: string; name: string }[];
 }
 
 const NewsFilters = ({
-    searchQuery,
-    setSearchQuery,
-    selectedSource,
-    setSelectedSource,
-    sortOrder,
-    setSortOrder,
+    filters,
     allowedSources = [],
 }: NewsFiltersProps) => {
+    const {searchQuery , setSearchQuery, selectedSource,setSelectedSource ,sortOrder ,setSortOrder} = filters;
+    
     return (
         <div className="mb-8 grid grid-cols-2 gap-4 md:flex md:flex-row md:items-center">
             <div className="relative col-span-2 md:flex-1">

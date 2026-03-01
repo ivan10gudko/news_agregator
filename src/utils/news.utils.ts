@@ -1,5 +1,5 @@
 import type { CmsTopic } from "@/types/cms.types";
-import type { Article, ArticleTopic, NewsApiResponse } from "@/types/news.types";
+import type { Article, ArticleTopic } from "@/types/news.types";
 
 
 export const determineArticleTopics = (
@@ -8,7 +8,7 @@ export const determineArticleTopics = (
 ): ArticleTopic[] => {
     if (!title || !cmsTopics || cmsTopics.length === 0) return [];
 
-    const res =  cmsTopics.reduce<ArticleTopic[]>((acc, topic) => {
+    const res = cmsTopics.reduce<ArticleTopic[]>((acc, topic) => {
         const hasMatch = topic.keywords.some((keyword) => {
             const regex = new RegExp(`\\b${keyword}\\b`, 'i');
             return regex.test(title);
@@ -25,18 +25,23 @@ export const determineArticleTopics = (
 };
 
 export const transformAndSortArticles = (
-    rawNewsData: NewsApiResponse,
+    rawArticles: Article[],
     topics: CmsTopic[] | undefined,
     sortOrder: "asc" | "desc"
 ): Article[] => {
-    if (!rawNewsData?.articles) return [];
+    if (!rawArticles || rawArticles.length === 0) return [];
 
-    const transformed = rawNewsData.articles.map((article) => ({
+    const transformed = rawArticles.map((article) => ({
         ...article,
         topics: determineArticleTopics(article.title, topics),
     }));
 
-    return sortOrder === "asc" ? transformed.reverse() : transformed;
+    return transformed.sort((a, b) => {
+        const dateA = new Date(a.publishedAt).getTime();
+        const dateB = new Date(b.publishedAt).getTime();
+
+        return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
+    });
 };
 
 export const createSlug = (title: string) => {

@@ -1,7 +1,7 @@
 import useNewsFilters from "./useNewsFilters";
 import { useCmsConfig } from "./useCmsConfig";
 import { useCallback, useMemo } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, type InfiniteData } from "@tanstack/react-query";
 import { fetchNews } from "@/api/news.api";
 import type { NewsApiResponse } from "@/types/news.types";
 import { formatSourcesForApi } from "@/utils/cms.utils";
@@ -21,12 +21,17 @@ export const useNewsFeed = () => {
     }, [cmsConfig, filters.selectedSource]);
 
     const selectFn = useCallback(
-        (rawNewsData: NewsApiResponse) =>
-            transformAndSortArticles(
-                rawNewsData,
+        (infiniteData: InfiniteData<NewsApiResponse>) => {
+            const allRawArticles = infiniteData.pages.flatMap(
+                (page) => page.articles || []
+            );
+
+            return transformAndSortArticles(
+                allRawArticles,
                 cmsConfig?.topics,
                 filters.sortOrder
-            ),
+            );
+        },
         [cmsConfig?.topics, filters.sortOrder]
     );
 
@@ -34,23 +39,47 @@ export const useNewsFeed = () => {
         data,
         isLoading: isNewsLoading,
         error,
-    } = useQuery({
+        fetchNextPage,
+        hasNextPage,
+        isFetchingNextPage,
+    } = useInfiniteQuery({
         queryKey: ["news", filters.searchQuery, sourcesForApi],
-        queryFn: () =>
+
+        queryFn: ({ pageParam = 1 }) =>
             fetchNews({
                 q: filters.searchQuery || "general",
                 sources: sourcesForApi,
-                sortBy: "publishedAt"
+                sortBy: "publishedAt",
+                page: pageParam,
+                pageSize: 30,
             }),
+
+        initialPageParam: 1,
+
+        getNextPageParam: (lastPage, allPages) => {
+            if (!lastPage.articles || lastPage.articles.length < 20)
+                return undefined;
+            return allPages.length + 1;
+        },
+
         enabled: !!sourcesForApi,
+
         select: selectFn,
     });
 
     return {
         articles: data ?? [],
         cmsConfig,
+        
         isLoading: isCmsLoading || isNewsLoading,
         error,
-        ...filters
+
+        filters,
+        
+        pagination: {
+            fetchNextPage,
+            hasNextPage,
+            isFetchingNextPage,
+        }
     };
 };

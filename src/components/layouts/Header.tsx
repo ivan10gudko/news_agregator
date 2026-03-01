@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import Logo from "../shared/Logo";
+import { ModeToggle } from "../features/theme/ModeToogle";
 
 const Header = () => {
     return (
@@ -8,6 +9,9 @@ const Header = () => {
                 <Link to="/">
                     <Logo />
                 </Link>
+                <div className="flex items-center gap-4">
+                    <ModeToggle />
+                </div>
             </div>
         </header>
     );

@@ -1,13 +1,15 @@
 import type { NewsApiResponse } from "@/types/news.types";
 
-const BASE_URL = import.meta.env.VITE_API_URL || "https://newsapi.org/v2";
+const isDev = import.meta.env.DEV;
+
+const BASE_URL = import.meta.env.VITE_API_URL || (isDev ? "https://newsapi.org/v2" : "/api");
 const API_KEY = import.meta.env.VITE_NEWS_API_KEY;
 
 export const buildNewsUrl = (
     endpoint: string,
     params?: Record<string, string | number | boolean | undefined | null>
 ): string => {
-    const url = new URL(`${BASE_URL}${endpoint}`);
+    const url = new URL(`${BASE_URL}${endpoint}`, window.location.origin);
 
     if (params) {
         Object.entries(params).forEach(([key, value]) => {
@@ -17,8 +19,9 @@ export const buildNewsUrl = (
         });
     }
 
-
-    url.searchParams.append("apiKey", API_KEY);
+    if (isDev && API_KEY) {
+        url.searchParams.append("apiKey", API_KEY);
+    }
 
     return url.toString();
 };

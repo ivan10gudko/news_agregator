@@ -1,10 +1,27 @@
 import type { NewsApiResponse } from "@/types/news.types";
 
+export interface FetchNewsParams {
+    q?: string;
+    sources?: string;
+    sortBy?: "publishedAt" | "relevancy" | "popularity";
+    page?: number;
+    pageSize?: number;
+}
+
 const isDev = import.meta.env.DEV;
 
-const BASE_URL =
-    import.meta.env.VITE_API_URL || (isDev ? "https://newsapi.org/v2" : "/api");
+const BASE_URL = import.meta.env.VITE_API_URL || (isDev ? "https://newsapi.org/v2" : "/api");
 const API_KEY = import.meta.env.VITE_NEWS_API_KEY;
+
+export const getAuthHeaders = (): HeadersInit => {
+    const headers: Record<string, string> = {};
+    
+    if (isDev && API_KEY) {
+        headers["X-Api-Key"] = API_KEY;
+    }
+
+    return headers;
+};
 
 export const buildNewsUrl = (
     endpoint: string,
@@ -27,14 +44,6 @@ export const buildNewsUrl = (
     return url.toString();
 };
 
-export interface FetchNewsParams {
-    q?: string;
-    sources?: string;
-    sortBy?: "publishedAt" | "relevancy" | "popularity";
-    page?: number;
-    pageSize?: number;
-}
-
 export const fetchNews = async (
     params: FetchNewsParams = {}
 ): Promise<NewsApiResponse> => {
@@ -45,7 +54,9 @@ export const fetchNews = async (
 
     const url = buildNewsUrl("/everything", safeParams);
 
-    const response = await fetch(url);
+    const response = await fetch(url,{
+        headers: getAuthHeaders()
+    });
 
     if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));

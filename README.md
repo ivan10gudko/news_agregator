@@ -5,7 +5,7 @@ The application features a secure Serverless Proxy to protect API keys and integ
 
 ## Live Links
 - **Frontend App:** [app]https://news-agregator-tau.vercel.app
-- **Sanity CMS Admin:** [cms]https://www.sanity.io/@oVwiQ4lOG/studio/te5icwn8f622kiyyr5su9gya/default
+- **Sanity CMS Admin:** [cms]https://www.sanity.io/@oVwiQ4lOG/studio
 
 ## CMS
  - **CMS repo** : https://github.com/ivan10gudko/newsagregatorcms.git

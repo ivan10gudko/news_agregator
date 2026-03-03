@@ -1,8 +1,8 @@
-import type { CmsAllowedSource } from "@/types/cms.types";
+import type { CmsSource } from "@/types/cms.types";
 
 export const formatSourcesForApi = (
     selectedSource: string,
-    allowedSources: CmsAllowedSource[] = []
+    allowedSources: CmsSource[] = []
 ): string => {
     if (selectedSource !== "all") {
         return selectedSource;

@@ -4,8 +4,8 @@ A modern, responsive, and secure news aggregator built with React, pulling data 
 The application features a secure Serverless Proxy to protect API keys and integrates with Sanity CMS for dynamic topic and source management.
 
 ## Live Links
-- **Frontend App:** [app]https://news-agregator-tau.vercel.app
-- **Sanity CMS Admin:** [cms]https://www.sanity.io/@oVwiQ4lOG/studio
+- **Frontend App:** [app](https://news-agregator-tau.vercel.app)
+- **Sanity CMS Admin:** [cms](https://www.sanity.io/@oVwiQ4lOG/studio)
 
 ## CMS
  - **CMS repo** : https://github.com/ivan10gudko/newsagregatorcms.git

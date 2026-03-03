@@ -2,7 +2,8 @@ import type { NewsApiResponse } from "@/types/news.types";
 
 const isDev = import.meta.env.DEV;
 
-const BASE_URL = import.meta.env.VITE_API_URL || (isDev ? "https://newsapi.org/v2" : "/api");
+const BASE_URL =
+    import.meta.env.VITE_API_URL || (isDev ? "https://newsapi.org/v2" : "/api");
 const API_KEY = import.meta.env.VITE_NEWS_API_KEY;
 
 export const buildNewsUrl = (
@@ -34,7 +35,9 @@ export interface FetchNewsParams {
     pageSize?: number;
 }
 
-export const fetchNews = async (params: FetchNewsParams = {}): Promise<NewsApiResponse> => {
+export const fetchNews = async (
+    params: FetchNewsParams = {}
+): Promise<NewsApiResponse> => {
     const safeParams = {
         ...params,
         q: params.q || (params.sources ? undefined : "news"),

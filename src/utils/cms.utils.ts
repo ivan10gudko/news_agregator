@@ -2,7 +2,7 @@ import type { CmsAllowedSource } from "@/types/cms.types";
 
 export const formatSourcesForApi = (
     selectedSource: string,
-    allowedSources: CmsAllowedSource[] = [],
+    allowedSources: CmsAllowedSource[] = []
 ): string => {
     if (selectedSource !== "all") {
         return selectedSource;

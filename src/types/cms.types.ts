@@ -1,5 +1,4 @@
-
-export interface CmsAllowedSource {
+export interface CmsSource {
     id: string;
     name: string;
 }
@@ -11,6 +10,6 @@ export interface CmsTopic {
 }
 
 export interface CmsConfig {
-    allowedSources: CmsAllowedSource[];
+    allowedSources: CmsSource[];
     topics: CmsTopic[];
 }

@@ -7,10 +7,14 @@ interface LoadMoreProps {
     fetchNextPage: () => void;
 }
 
-const LoadMore = ({ hasNextPage, isFetchingNextPage, fetchNextPage }: LoadMoreProps) => {
+const LoadMore = ({
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+}: LoadMoreProps) => {
     if (!hasNextPage) {
         return (
-            <p className="text-muted-foreground mt-8 pb-4 text-center text-sm">
+            <p className="mt-8 pb-4 text-center text-sm text-muted-foreground">
                 You've caught up with all the news!
             </p>
         );

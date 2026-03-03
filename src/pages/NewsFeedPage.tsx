@@ -7,7 +7,8 @@ import NoArticlesFound from "@/components/shared/NoArticlesFound";
 import { useNewsFeed } from "@/hooks/useNewsFeed";
 
 const NewsFeedPage = () => {
-    const { articles, cmsConfig, isLoading, error, filters, pagination } = useNewsFeed();
+    const { articles, cmsConfig, isLoading, error, filters, pagination } =
+        useNewsFeed();
 
     return (
         <div className="flex flex-col gap-8">
@@ -15,7 +16,7 @@ const NewsFeedPage = () => {
                 <h1 className="text-3xl font-bold tracking-tight">
                     Top Headlines
                 </h1>
-                <p className="text-muted-foreground mt-1">
+                <p className="mt-1 text-muted-foreground">
                     Stay updated with the latest news tailored to your
                     interests.
                 </p>

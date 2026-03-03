@@ -52,7 +52,7 @@ const ArticleCard = ({ article }: ArticleCardProps) => {
                     )}
                 </div>
 
-                <CardTitle className="group-hover:text-primary line-clamp-2 text-xl leading-snug transition-colors">
+                <CardTitle className="line-clamp-2 text-xl leading-snug transition-colors group-hover:text-primary">
                     <Link
                         to={`/article/${createSlug(article.title)}`}
                         state={{ article }}
@@ -64,14 +64,14 @@ const ArticleCard = ({ article }: ArticleCardProps) => {
             </CardHeader>
 
             <CardContent className="flex grow flex-col pb-5">
-                <p className="text-muted-foreground mb-4 line-clamp-3 text-sm">
+                <p className="mb-4 line-clamp-3 text-sm text-muted-foreground">
                     {article.description ||
                         "No description available for this article."}
                 </p>
             </CardContent>
 
-            <CardFooter className="border-muted text-muted-foreground mt-auto flex items-center justify-between border-t pt-4 text-xs">
-                <span className="text-foreground/80 font-semibold">
+            <CardFooter className="mt-auto flex items-center justify-between border-t border-muted pt-4 text-xs text-muted-foreground">
+                <span className="font-semibold text-foreground/80">
                     {article.source.name}
                 </span>
                 <div className="flex items-center gap-1">

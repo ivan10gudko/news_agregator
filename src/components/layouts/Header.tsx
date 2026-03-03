@@ -4,7 +4,7 @@ import { ModeToggle } from "../features/theme/ModeToogle";
 
 const Header = () => {
     return (
-        <header className="bg-background w-full border-b">
+        <header className="w-full border-b bg-background">
             <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-8">
                 <Link to="/">
                     <Logo />

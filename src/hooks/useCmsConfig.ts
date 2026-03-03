@@ -6,6 +6,8 @@ export const useCmsConfig = () => {
     return useQuery<CmsConfig>({
         queryKey: ["cmsConfig"],
         queryFn: fetchCmsConfig,
-        staleTime: 1000 * 60 * 10, // 10 minutes
+        // Set to 1 min for testing/review convenience.
+        // In a real production app, 10+ mins is optimal since CMS config rarely changes.
+        staleTime: 1000 * 60,
     });
 };

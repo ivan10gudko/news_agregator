@@ -70,16 +70,16 @@ export const useNewsFeed = () => {
     return {
         articles: data ?? [],
         cmsConfig,
-        
+
         isLoading: isCmsLoading || isNewsLoading,
         error,
 
         filters,
-        
+
         pagination: {
             fetchNextPage,
             hasNextPage,
             isFetchingNextPage,
-        }
+        },
     };
 };

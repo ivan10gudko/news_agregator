@@ -15,12 +15,18 @@ const ArticleHeader = ({ article }: ArticleHeaderProps) => {
             <div className="mb-4 flex flex-wrap gap-2">
                 {article.topics && article.topics.length > 0 ? (
                     article.topics.map((topic) => (
-                        <Badge key={topic.id} className="tracking-wider uppercase">
+                        <Badge
+                            key={topic.id}
+                            className="tracking-wider uppercase"
+                        >
                             {topic.name}
                         </Badge>
                     ))
                 ) : (
-                    <Badge variant="secondary" className="tracking-wider uppercase">
+                    <Badge
+                        variant="secondary"
+                        className="tracking-wider uppercase"
+                    >
                         General
                     </Badge>
                 )}
@@ -30,12 +36,12 @@ const ArticleHeader = ({ article }: ArticleHeaderProps) => {
                 {article.title}
             </h1>
 
-            <div className="text-muted-foreground flex flex-wrap items-center gap-4">
-                <span className="text-foreground font-semibold">
+            <div className="flex flex-wrap items-center gap-4 text-muted-foreground">
+                <span className="font-semibold text-foreground">
                     {article.source.name}
                 </span>
                 <span className="text-muted-foreground/50">•</span>
-                
+
                 <div className="flex items-center gap-1.5">
                     <CalendarDays className="h-4 w-4" />
                     <span>{formattedDate}</span>

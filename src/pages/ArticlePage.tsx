@@ -17,11 +17,11 @@ const ArticlePage = () => {
     }
 
     return (
-        <article className="animate-in fade-in mx-auto max-w-3xl py-8 duration-500">
+        <article className="mx-auto max-w-3xl animate-in py-8 duration-500 fade-in">
             <Button
                 variant="ghost"
                 onClick={() => navigate(-1)}
-                className="hover:text-primary mb-8 pl-0 hover:bg-transparent"
+                className="mb-8 pl-0 hover:bg-transparent hover:text-primary"
             >
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to news
@@ -40,7 +40,7 @@ const ArticlePage = () => {
             )}
 
             <div className="prose prose-lg dark:prose-invert mb-12 max-w-none">
-                <p className="text-muted-foreground mb-6 text-xl leading-relaxed font-medium">
+                <p className="mb-6 text-xl leading-relaxed font-medium text-muted-foreground">
                     {article.description}
                 </p>
                 <p className="leading-relaxed">
@@ -49,7 +49,7 @@ const ArticlePage = () => {
                 </p>
             </div>
 
-            <div className="border-muted flex justify-center border-t pt-10">
+            <div className="flex justify-center border-t border-muted pt-10">
                 <Button
                     size="lg"
                     asChild

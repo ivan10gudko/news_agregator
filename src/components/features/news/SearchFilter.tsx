@@ -25,7 +25,7 @@ const SearchFilter = ({ searchQuery, setSearchQuery }: SearchFilterProps) => {
 
     return (
         <div className="relative col-span-2 md:flex-1">
-            <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
+            <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
                 type="text"
                 placeholder="Search news..."

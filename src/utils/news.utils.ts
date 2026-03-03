@@ -1,7 +1,6 @@
 import type { CmsTopic } from "@/types/cms.types";
 import type { Article, ArticleTopic } from "@/types/news.types";
 
-
 export const determineArticleTopics = (
     title: string,
     cmsTopics: CmsTopic[] | undefined
@@ -10,7 +9,7 @@ export const determineArticleTopics = (
 
     const res = cmsTopics.reduce<ArticleTopic[]>((acc, topic) => {
         const hasMatch = topic.keywords.some((keyword) => {
-            const regex = new RegExp(`\\b${keyword}\\b`, 'i');
+            const regex = new RegExp(`\\b${keyword}\\b`, "i");
             return regex.test(title);
         });
 
@@ -45,5 +44,8 @@ export const transformAndSortArticles = (
 };
 
 export const createSlug = (title: string) => {
-    return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+    return title
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)+/g, "");
 };

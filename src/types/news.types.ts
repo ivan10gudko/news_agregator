@@ -7,7 +7,7 @@ export interface NewsSource {
     name: string;
 }
 
-export type ArticleTopic = Omit<CmsTopic, "keywords">
+export type ArticleTopic = Omit<CmsTopic, "keywords">;
 export interface Article {
     source: NewsSource;
     author: string | null;

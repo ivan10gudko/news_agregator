@@ -4,7 +4,7 @@ import { Outlet, ScrollRestoration } from "react-router";
 
 const MainLayout = () => {
     return (
-        <div className="bg-background flex min-h-screen flex-col">
+        <div className="flex min-h-screen flex-col bg-background">
             <Header />
 
             <main className="container mx-auto flex-1 px-4 py-8 md:px-8">

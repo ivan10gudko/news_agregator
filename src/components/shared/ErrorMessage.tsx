@@ -10,7 +10,7 @@ const ErrorMessage = ({
     description,
 }: ErrorMessageProps) => {
     return (
-        <div className="border-destructive/50 bg-destructive/10 text-destructive flex flex-col items-center justify-center rounded-lg border p-8 text-center">
+        <div className="flex flex-col items-center justify-center rounded-lg border border-destructive/50 bg-destructive/10 p-8 text-center text-destructive">
             <AlertCircle className="mb-3 h-8 w-8 opacity-80" />
 
             <p className="text-lg font-medium">{title}</p>
